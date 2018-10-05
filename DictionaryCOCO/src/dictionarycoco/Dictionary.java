@@ -5,14 +5,14 @@ package dictionarycoco;
 import java.util.HashMap;
 
 public class Dictionary {
-    HashMap<String,Word> words =new HashMap<String,Word>();
+    HashMap<String,String> words =new HashMap<String,String>();
 }
 class Word {
     String spelling,explain;
     int id;
-    public Word(int id,String a,String b){
-        spelling =a;
-        explain= b;
+    public Word(int id,String spe,String exp){
+        spelling =spe;
+        explain= exp;
     }
     public Word(){
         
