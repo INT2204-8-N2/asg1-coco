@@ -9,7 +9,7 @@ public class DictionaryComandLine {
         dm.dictionaryLookUp();
         dm.dictionarySearcher();
         dm.addword();
-        dm.dictionaryExportToFile("output");
+        //dm.dictionaryExportToFile("output");
     }
     public static void main(String [] args){
         DictionaryComandLine dcl = new DictionaryComandLine();

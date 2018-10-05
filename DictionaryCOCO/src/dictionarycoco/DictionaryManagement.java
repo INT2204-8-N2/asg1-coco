@@ -51,7 +51,7 @@ public class DictionaryManagement {
                 String[] a = line.split("\\s", 2);
                 ex.spelling = a[0];
                 ex.explain = a[1];
-                dic.words.put(ex.spelling,ex);
+                dic.words.put(ex.spelling,ex.explain);
             }
             br.close();
         } catch (IOException e) {
@@ -64,7 +64,7 @@ public class DictionaryManagement {
         System.out.println( "Englih" + "\t\t\t" + "VietNamese");
         dic.words.forEach((eng,viet)->{
             
-            System.out.printf("%-15s\t%-15s\n" , eng, viet.explain);
+            System.out.printf("%-15s\t%-15s\n" , eng, viet);
         });
        
     }
@@ -96,7 +96,7 @@ public class DictionaryManagement {
             word.spelling=scan.nextLine();
             System.out.println("Explain: ");
             word.explain=scan.nextLine();
-            dic.words.put(word.spelling,word);
+            dic.words.put(word.spelling,word.explain);
             System.out.println("Add sucecss!!!");
         }
     }
@@ -113,7 +113,7 @@ public class DictionaryManagement {
                 System.out.println("new spelling: ");
                 key = scan.nextLine();
                 System.out.println("new explain: ");
-                value.explain= scan.nextLine();
+                value= scan.nextLine();
                 
             }
         });
