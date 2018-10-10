@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Admin
+ * @author buidangthutra
  */
 public class HelloAPI {
     public static void main(String[] args) {

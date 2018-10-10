@@ -13,7 +13,7 @@ import javazoom.jl.decoder.JavaLayerException;
 
 /**
  *
- * @author Admin
+ * @author buidangthutra;
  */
 public class TestAPI {
     public static void main(String[] args) throws IOException {

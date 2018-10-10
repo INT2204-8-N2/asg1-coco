@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Administrator
+ * @author buidangthutra;
  */
 public class DictionaryManagement {
     Dictionary dic = new Dictionary();

@@ -7,7 +7,7 @@ package dictionarycoco;
 
 /**
  *
- * @author Administrator
+ * @author buidangthutra;
  */
 public class DictionaryCOCO {
 
