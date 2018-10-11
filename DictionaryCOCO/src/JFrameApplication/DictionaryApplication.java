@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dictionary;
+package JFrameApplication;
 
 import API.SynthesiserV2;
+import Dtb.DTB;
+import dictionarycoco.Word;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -114,7 +116,7 @@ public class DictionaryApplication extends javax.swing.JFrame {
             }
         });
 
-        bAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/add_1.png"))); // NOI18N
+        bAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/add.png"))); // NOI18N
         bAdd.setToolTipText("Thêm");
         bAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -317,8 +319,8 @@ public class DictionaryApplication extends javax.swing.JFrame {
         {
         word = new Word();
         word= connect.getword(jList1.getSelectedValue());
-       if(!word.spelling.isEmpty())
-       jLabel2.setText("<HTML>"+word.explain+"</HTML>");
+       if(!word.getSpelling().isEmpty())
+       jLabel2.setText("<HTML>"+word.getExplain()+"</HTML>");
     }//GEN-LAST:event_jList1ValueChanged
     else{
         jLabel2.setText("");
@@ -362,10 +364,10 @@ public class DictionaryApplication extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-                synthesizer.speak(word.spelling);
+                synthesizer.speak(word.getSpelling());
                 
            } catch (JavaLayerException ex) {
-                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);}
+                Logger.getLogger(DictionaryApplication.class.getName()).log(Level.SEVERE, null, ex);}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void bTranslateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTranslateActionPerformed
@@ -398,8 +400,8 @@ public class DictionaryApplication extends javax.swing.JFrame {
 
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
         // TODO add your handling code here:
-        if(!word.spelling.isEmpty())
-        {connect.delete(word.spelling);
+        if(!word.getSpelling().isEmpty())
+        {connect.delete(word.getSpelling());
         JOptionPane.showMessageDialog(null, "Xóa từ thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
         else
@@ -435,8 +437,8 @@ public class DictionaryApplication extends javax.swing.JFrame {
         // TODO add your handling code here:
         word = new Word();
         word=connect.getword(tfEnter.getText());
-        if(!word.spelling.isEmpty())
-        jLabel2.setText("<HTML>"+word.explain+"</HTML>");
+        if(!word.getSpelling().isEmpty())
+        jLabel2.setText("<HTML>"+word.getExplain()+"</HTML>");
         else
         jLabel2.setText("Không tìm thấy từ");
     }//GEN-LAST:event_timActionPerformed
