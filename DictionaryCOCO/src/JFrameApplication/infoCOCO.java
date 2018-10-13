@@ -54,7 +54,7 @@ public class infoCOCO extends javax.swing.JFrame {
         jTextArea2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jTextArea2.setLineWrap(true);
         jTextArea2.setRows(5);
-        jTextArea2.setText("* team: COCO\nNguyễn Thị Vân Anh - 17020584\nBùi Đặng Thu Trà - 17021069\n* Từ điển Anh - Việt sử dụng:\nSqlite \nAPI : Text to speech và Google Translate  (Tham khảo trên mạng)\n*Các chức năng:\n+Thêm từ\n+Sửa từ\n+Xóa từ\n+Tìm kiếm từ theo 2 cách\n+Xuất dữ liệu đang có sang file txt\n+Phát âm\n+Dịch văn bản\n+Phát âm văn bản ");
+        jTextArea2.setText("* team: COCO\nNguyễn Thị Vân Anh - 17020584\nBùi Đặng Thu Trà - 17021069\n* Từ điển Anh - Việt sử dụng:\nSqlite \nAPI : Text to speech và Google Translate  (Tham khảo trên mạng)\n*Các chức năng:\n+Thêm từ, Sửa từ, Xóa từ\n+Tìm kiếm từ theo 2 cách\n+Xuất dữ liệu đang có sang file txt\n+Phát âm\n+Dịch văn bản(E-V V-E)\n+Phát âm văn bản(E-V)\n+Dịch từ bằng giọng nói(E-V)\n+Test phát âm của từ được chọn");
         jScrollPane2.setViewportView(jTextArea2);
 
         jTextArea3.setEditable(false);
