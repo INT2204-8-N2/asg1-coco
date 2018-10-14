@@ -45,7 +45,9 @@ public class ConnectWeb extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Connect Web");
+        setLocation(new java.awt.Point(400, 150));
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
@@ -83,9 +85,10 @@ public class ConnectWeb extends javax.swing.JFrame {
         });
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
-        jTextArea1.setText("- Duolingo: là cách phổ biến nhất trên thế giớ để học ngôn ngữ. Vui nhộn và dựa trên khoa học.\n\n- Quizlet: Web rèn luyện và nắm vững hơn 200 triệu học phần về mọi chủ đề và đề tài có thể.\n\n- Ielts speaking: Đưa ra các cách dùng và từ vựng trong Ielts hữu ích.\n\n- Esl lab: Trang web giúp bạn rèn luyện kĩ năng Nghe-hiểu một cách toàn diện. Cung cấp hệ thống bài nghe vô cùng đa dạng, thuộc nhiều chủ đề gần gũi khác nhau.");
+        jTextArea1.setText("- Duolingo: là cách phổ biến nhất trên thế giớ để học ngôn ngữ. Vui nhộn và dựa trên khoa học.\n\n\n- Quizlet: Web rèn luyện và nắm vững hơn 200 triệu học phần về mọi chủ đề và đề tài có thể.\n\n\n- Ielts speaking: Đưa ra các cách dùng và từ vựng trong Ielts hữu ích.\n\n\n\n- Esl lab: Trang web giúp bạn rèn luyện kĩ năng Nghe-hiểu một cách toàn diện. Cung cấp hệ thống bài nghe vô cùng đa dạng, thuộc nhiều chủ đề gần gũi khác nhau.");
         jTextArea1.setWrapStyleWord(true);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -109,16 +112,16 @@ public class ConnectWeb extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
                         .addComponent(jButton3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton4)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,7 +132,9 @@ public class ConnectWeb extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 41, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,53 +143,42 @@ public class ConnectWeb extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             Desktop B3 = Desktop.getDesktop();
-            try {
-                B3.browse(new URI("https://www.ieltsspeaking.co.uk/ielts-vocabulary/"));
-            } catch (IOException ex) {
+            B3.browse(new URI("https://www.ieltsspeaking.co.uk/ielts-vocabulary/"));
+            } catch (Exception ex) {
                 Logger.getLogger(ConnectWeb.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(ConnectWeb.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Desktop B2 = Desktop.getDesktop();
         try {
-          try {
+         
               B2.browse(new URI("https://quizlet.com/latest"));
-          } catch (IOException ex) {
+          } catch (Exception ex) {
               Logger.getLogger(ConnectWeb.class.getName()).log(Level.SEVERE, null, ex);
           }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(ConnectWeb.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         Desktop B4 = Desktop.getDesktop();
         try {
-          try {
+          
               B4.browse(new URI("https://www.esl-lab.com/"));
-          } catch (IOException ex) {
+          } catch (Exception ex) {
               Logger.getLogger(ConnectWeb.class.getName()).log(Level.SEVERE, null, ex);
           }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(ConnectWeb.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Desktop B1 = Desktop.getDesktop();
         try {
-            try {
                 B1.browse(new URI("https://www.duolingo.com/"));
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(ConnectWeb.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(ConnectWeb.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
