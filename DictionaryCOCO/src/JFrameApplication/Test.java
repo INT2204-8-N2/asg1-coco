@@ -155,9 +155,24 @@ public class Test extends javax.swing.JFrame {
         stop.setEnabled(false);
         response.setEnabled(true);
         if(word.equals(response.getText()))
+        {    try {
+            synthesiser.speak("Correct");
             JOptionPane.showMessageDialog(null,"Bạn đã phát âm đúng ^^, đừng quên luyện tập lại ","Xin chúc mừng", JOptionPane.INFORMATION_MESSAGE);
+             } catch (JavaLayerException ex) {
+                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         
+        }
         else
-            JOptionPane.showMessageDialog(null,"Bạn đã phát âm sai :(( , cố gắng lên nhé ","Xin chia buồn", JOptionPane.INFORMATION_MESSAGE);
+        {
+             try {
+                 synthesiser.speak("Wrong");
+                 JOptionPane.showMessageDialog(null,"Bạn đã phát âm sai :(( , cố gắng lên nhé ","Xin chia buồn", JOptionPane.INFORMATION_MESSAGE);
+             } catch (JavaLayerException ex) {
+                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+             }
+            
+        }
     }//GEN-LAST:event_stopActionPerformed
      public void abc(){
         duplex.addResponseListener(new GSpeechResponseListener() {
