@@ -75,7 +75,6 @@ public class DictionaryApplication extends javax.swing.JFrame {
         MenuBar = new javax.swing.JMenuBar();
         File = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
-        SupplementWeb = new javax.swing.JCheckBoxMenuItem();
         miExit = new javax.swing.JMenuItem();
         Exit = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -269,9 +268,9 @@ public class DictionaryApplication extends javax.swing.JFrame {
                                         .addComponent(jButton3)
                                         .addGap(18, 18, 18)
                                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(bTranslate, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(bTranslate, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(30, 30, 30)
                                         .addComponent(bAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(bEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,15 +306,6 @@ public class DictionaryApplication extends javax.swing.JFrame {
             }
         });
         File.add(jMenuItem3);
-
-        SupplementWeb.setSelected(true);
-        SupplementWeb.setText("Supplement web");
-        SupplementWeb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SupplementWebActionPerformed(evt);
-            }
-        });
-        File.add(SupplementWeb);
 
         miExit.setText("Exit");
         miExit.addActionListener(new java.awt.event.ActionListener() {
@@ -503,13 +493,6 @@ public class DictionaryApplication extends javax.swing.JFrame {
         test.setWord(word);
         test.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void SupplementWebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SupplementWebActionPerformed
-        // TODO add your handling code here:
-        ConnectWeb connect = new ConnectWeb();
-        connect.setVisible(true);
-        connect.setResizable(false);
-    }//GEN-LAST:event_SupplementWebActionPerformed
   
 //    public void loadData() {
 //        ResultSet result = null;
@@ -567,7 +550,6 @@ public class DictionaryApplication extends javax.swing.JFrame {
     private javax.swing.JMenu Exit;
     private javax.swing.JMenu File;
     private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JCheckBoxMenuItem SupplementWeb;
     private javax.swing.JButton bAdd;
     private javax.swing.JButton bDelete;
     private javax.swing.JButton bEdit;
