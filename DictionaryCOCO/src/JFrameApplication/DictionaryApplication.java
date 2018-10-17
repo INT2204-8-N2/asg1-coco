@@ -34,8 +34,8 @@ public class DictionaryApplication extends javax.swing.JFrame {
    DTB connect = new DTB();
    Word word= new Word() ;
    DefaultListModel dm = new DefaultListModel();
-    DefaultListModel mhis = new DefaultListModel();
-    HashMap <String,Integer> his = new HashMap<String,Integer>();
+   DefaultListModel mhis = new DefaultListModel();
+   HashMap <String,Integer> his = new HashMap<String,Integer>();
    SynthesiserV2 synthesizer = new SynthesiserV2();
   
     public DictionaryApplication() {
@@ -398,8 +398,7 @@ public class DictionaryApplication extends javax.swing.JFrame {
     }
     @SuppressWarnings("unchecked")
     private void tfEnterCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_tfEnterCaretUpdate
-        // TODO add your handling code here:
-     
+ 
     }//GEN-LAST:event_tfEnterCaretUpdate
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -428,6 +427,10 @@ public class DictionaryApplication extends javax.swing.JFrame {
         edit edit = new edit();
         edit.setWord(word);
         edit.setVisible(true);
+        tfEnter.setText("");
+        his.remove(word.getSpelling());
+        inithistory();
+        jLabel2.setText("");
     }//GEN-LAST:event_bEditActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -444,7 +447,11 @@ public class DictionaryApplication extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!word.getSpelling().isEmpty())
         {connect.delete(word.getSpelling());
+        his.remove(word.getSpelling());
         JOptionPane.showMessageDialog(null, "Xóa từ thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        inithistory();
+        jLabel2.setText("");
+        tfEnter.setText("");
         }
         else
         JOptionPane.showMessageDialog(null, "Bạn chưa chọn từ để xóa","Lỗi",JOptionPane.ERROR_MESSAGE);
@@ -518,10 +525,9 @@ public class DictionaryApplication extends javax.swing.JFrame {
         if(evt.getKeyCode()==KeyEvent.VK_ENTER)
         { 
             tfEnter.transferFocus();
-           tcx.transferFocus();
-          
+           tcx.transferFocus();         
         }
-        search();
+       search();
     }//GEN-LAST:event_tfEnterKeyReleased
     @SuppressWarnings("unchecked")
     private void timKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_timKeyReleased
@@ -560,7 +566,6 @@ public class DictionaryApplication extends javax.swing.JFrame {
         word=new Word();
             if(tfEnter.getText().isEmpty()){
                 jLabel2.setText("");
-               // loadData();
                inithistory();
             }
            else{
@@ -576,24 +581,6 @@ public class DictionaryApplication extends javax.swing.JFrame {
         jList1.setModel(dm);
             }
         }
-    }
-    @SuppressWarnings("unchecked")
-    public void loadallData() {
-        ResultSet result = null;
-        dm.clear();
-       try {
-            result = connect.excuteQuery("SELECT word FROM tbl_edict");
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi1:" + ex.toString());
-        }
-        try {
-            while (result.next()) {
-                dm.addElement(result.getString("word"));
-            }
-        } catch (SQLException ex) {
-            loadallData();
-        }
-        jList1.setModel(dm);
     }
     /**
      * @param args the command line arguments

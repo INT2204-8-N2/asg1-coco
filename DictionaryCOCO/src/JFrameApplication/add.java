@@ -7,6 +7,7 @@ package JFrameApplication;
 
 import Dtb.DTB;
 import dictionarycoco.Word;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -66,10 +67,20 @@ public class add extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 23, 390, -1));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextArea1KeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTextArea1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 390, 158));
@@ -79,6 +90,11 @@ public class add extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jButton1KeyReleased(evt);
             }
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
@@ -150,6 +166,45 @@ public class add extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+            jTextField1.transferFocus();
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextArea1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyReleased
+        // TODO add your handling code here:
+         if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+            jTextArea1.transferFocus();
+    }//GEN-LAST:event_jTextArea1KeyReleased
+
+    private void jButton1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyReleased
+        // TODO add your handling code here:
+         eng=jTextField1.getText();
+        viet=jTextArea1.getText();
+        DTB dtb = new DTB();
+        Word ev= new Word();
+        ev =dtb.getword(eng);
+        if(eng.isEmpty()||viet.isEmpty()){
+            JOptionPane.showMessageDialog(null,"Bạn chưa nhập hết thông tin","Lỗi",JOptionPane.ERROR_MESSAGE);
+       
+            jTextField1.requestFocus();
+            jTextArea1.requestFocus();
+        }
+        else if(ev.getSpelling()!=null)
+        { JOptionPane.showMessageDialog(null,"Từ nãy đã có trong Từ điển ","Cảnh báo",JOptionPane.WARNING_MESSAGE);
+          jTextField1.requestFocus();
+           jTextArea1.requestFocus();
+        }
+        else{
+            DTB conect = new DTB();
+            conect.setId();
+            conect.insert(eng, viet);
+            JOptionPane.showMessageDialog(null," Thêm Thành công", "Thông báo",JOptionPane.INFORMATION_MESSAGE);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton1KeyReleased
 
     /**
      * @param args the command line arguments

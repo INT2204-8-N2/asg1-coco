@@ -7,6 +7,7 @@ package JFrameApplication;
 
 import Dtb.DTB;
 import dictionarycoco.Word;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import javax.swing.JFrame;
@@ -146,13 +147,13 @@ public class edit extends javax.swing.JFrame {
         else if(eng.getSpelling()==null||eng.getSpelling().equals(word.getSpelling())){
             connect.update(word.getId(),jTextField2.getText(),jTextArea1.getText());
             JOptionPane.showMessageDialog(null, "Sửa Thành công", "Thông báo",JOptionPane.INFORMATION_MESSAGE);
+            
+            
             this.setVisible(false);
         }
         else{
             
-            JOptionPane.showMessageDialog(null,"Từ mới của bạn bị trùng","Lỗi",JOptionPane.ERROR_MESSAGE);
-           
-            
+            JOptionPane.showMessageDialog(null,"Từ mới của bạn bị trùng","Lỗi",JOptionPane.ERROR_MESSAGE); 
         }
        
     }//GEN-LAST:event_jButton1ActionPerformed
