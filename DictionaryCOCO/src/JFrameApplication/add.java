@@ -115,14 +115,6 @@ public class add extends javax.swing.JFrame {
         DTB dtb = new DTB();
         Word ev= new Word();
         ev =dtb.getword(eng);
-//        try {
-//            while(rs.next()){
-//                ev.spelling=rs.getString("word");
-//                ev.explain= rs.getString("detail");
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(add.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         if(eng.isEmpty()||viet.isEmpty()){
             JOptionPane.showMessageDialog(null,"Bạn chưa nhập hết thông tin","Lỗi",JOptionPane.ERROR_MESSAGE);
        

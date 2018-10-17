@@ -8,6 +8,7 @@ package JFrameApplication;
 import API.SynthesiserV2;
 import Dtb.DTB;
 import dictionarycoco.Word;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -99,9 +100,9 @@ public class DictionaryApplication extends javax.swing.JFrame {
                 tfEnterCaretUpdate(evt);
             }
         });
-        tfEnter.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tfEnterMouseClicked(evt);
+        tfEnter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfEnterKeyReleased(evt);
             }
         });
 
@@ -180,6 +181,11 @@ public class DictionaryApplication extends javax.swing.JFrame {
         tim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 timActionPerformed(evt);
+            }
+        });
+        tim.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                timKeyReleased(evt);
             }
         });
 
@@ -376,10 +382,6 @@ public class DictionaryApplication extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfEnterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfEnterMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfEnterMouseClicked
-
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
 
     if(!jList1.isSelectionEmpty())
@@ -388,7 +390,7 @@ public class DictionaryApplication extends javax.swing.JFrame {
         word= connect.getword(jList1.getSelectedValue());
         his.put(jList1.getSelectedValue(),1);
        if(!word.getSpelling().isEmpty())
-       jLabel2.setText("<HTML>"+word.getExplain()+"</HTML>");
+       jLabel2.setText(word.getExplain());
     }//GEN-LAST:event_jList1ValueChanged
     else{
         jLabel2.setText("");
@@ -397,30 +399,7 @@ public class DictionaryApplication extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     private void tfEnterCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_tfEnterCaretUpdate
         // TODO add your handling code here:
-        if(!tcx.isSelected())
-        {
-        dm.clear();
-        String  sql="select * from tbl_edict where word like \"" + tfEnter.getText() + "%"+"\"";
-        ResultSet result=null;
-        word=new Word();
-            if(tfEnter.getText().isEmpty()){
-                jLabel2.setText("");
-               // loadData();
-               inithistory();
-            }
-           else{
-                try {
-                     result = connect.excuteQuery(sql);
-                    while (result.next()) {
-                        dm.addElement(result.getString("word"));
-                    }
-                    result.close();
-                } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Có lỗi trong việc lấy dữ liệu, thành thật xin lỗi! ","Lỗi",JOptionPane.ERROR_MESSAGE);
-            }
-        jList1.setModel(dm);
-            }
-        }
+     
     }//GEN-LAST:event_tfEnterCaretUpdate
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -489,17 +468,19 @@ public class DictionaryApplication extends javax.swing.JFrame {
     private void tcxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tcxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tcxActionPerformed
-
+    @SuppressWarnings("unchecked")
     private void timActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timActionPerformed
         // TODO add your handling code here:
         word = new Word();
         word=connect.getword(tfEnter.getText());
         tcx.setSelected(true);
+        dm.clear();
+        dm.addElement(word.getSpelling());
+        jList1.setModel(dm);
+        jList1.setSelectedValue(word.getSpelling(),true);
         his.put(word.getSpelling(), 1);
-        if(!word.getSpelling().isEmpty())
-        jLabel2.setText("<HTML>"+word.getExplain()+"</HTML>");
-        else
-        jLabel2.setText("Không tìm thấy từ");
+        jLabel2.setText(word.getExplain());
+        
     }//GEN-LAST:event_timActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -532,24 +513,88 @@ public class DictionaryApplication extends javax.swing.JFrame {
         infoCOCO info = new infoCOCO();
         info.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
-  
-//    public void loadData() {
-//        ResultSet result = null;
-//        dm.clear();
-//       try {
-//            result = connect.excuteQuery("SELECT word FROM tbl_edict");
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(null, "Lỗi1:" + ex.toString());
-//        }
-//        try {
-//            while (result.next()) {
-//                dm.addElement(result.getString("word"));
-//            }
-//        } catch (SQLException ex) {
-//            loadData();
-//        }
-//        jList1.setModel(dm);
-//    }
+
+    private void tfEnterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfEnterKeyReleased
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        { 
+            tfEnter.transferFocus();
+           tcx.transferFocus();
+          
+        }
+        search();
+    }//GEN-LAST:event_tfEnterKeyReleased
+    @SuppressWarnings("unchecked")
+    private void timKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_timKeyReleased
+       if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+       {
+            word = new Word();
+        word=connect.getword(tfEnter.getText());
+        if(!tcx.isSelected())
+        {
+            tcx.setSelected(true);
+            his.put(word.getSpelling(), 1);
+            if(!word.getSpelling().isEmpty()){
+            jList1.setSelectedValue(word.getSpelling(),true);
+
+            }
+            else
+            jLabel2.setText("Không tìm thấy từ");
+         }
+        else{
+        dm.clear();
+        dm.addElement(word.getSpelling());
+        jList1.setModel(dm);
+        jList1.setSelectedValue(word.getSpelling(),true);
+        his.put(word.getSpelling(), 1);
+        jLabel2.setText(word.getExplain());
+        }
+       }
+    }//GEN-LAST:event_timKeyReleased
+    @SuppressWarnings("unchecked")
+    public void search(){
+    if(!tcx.isSelected())
+        {
+        dm.clear();
+        String  sql="select * from Dictionary where word like \"" + tfEnter.getText() + "%"+"\"";
+        ResultSet result=null;
+        word=new Word();
+            if(tfEnter.getText().isEmpty()){
+                jLabel2.setText("");
+               // loadData();
+               inithistory();
+            }
+           else{
+                try {
+                     result = connect.excuteQuery(sql);
+                    while (result.next()) {
+                        dm.addElement(result.getString("word"));
+                    }
+                    result.close();
+                } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Có lỗi trong việc lấy dữ liệu, thành thật xin lỗi! ","Lỗi",JOptionPane.ERROR_MESSAGE);
+            }
+        jList1.setModel(dm);
+            }
+        }
+    }
+    @SuppressWarnings("unchecked")
+    public void loadallData() {
+        ResultSet result = null;
+        dm.clear();
+       try {
+            result = connect.excuteQuery("SELECT word FROM tbl_edict");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi1:" + ex.toString());
+        }
+        try {
+            while (result.next()) {
+                dm.addElement(result.getString("word"));
+            }
+        } catch (SQLException ex) {
+            loadallData();
+        }
+        jList1.setModel(dm);
+    }
     /**
      * @param args the command line arguments
      */

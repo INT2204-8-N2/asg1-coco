@@ -136,16 +136,23 @@ public class edit extends javax.swing.JFrame {
         // TODO add your handling code here:
         engnew=jTextField2.getText();
         vnew=jTextArea1.getText();
+        DTB connect = new DTB();
+        Word eng=connect.getword(engnew);
         if(vnew.isEmpty()||engnew.isEmpty()||word.getId()==0){
             JOptionPane.showMessageDialog(null,"Bạn chưa nhập hết thông tin hoặc chưa chọn từ để sửa","Lỗi",JOptionPane.ERROR_MESSAGE);
             jTextArea1.requestFocus();
             
         }
-        else{
-            DTB connect = new DTB();
+        else if(eng.getSpelling()==null||eng.getSpelling().equals(word.getSpelling())){
             connect.update(word.getId(),jTextField2.getText(),jTextArea1.getText());
             JOptionPane.showMessageDialog(null, "Sửa Thành công", "Thông báo",JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);
+        }
+        else{
+            
+            JOptionPane.showMessageDialog(null,"Từ mới của bạn bị trùng","Lỗi",JOptionPane.ERROR_MESSAGE);
+           
+            
         }
        
     }//GEN-LAST:event_jButton1ActionPerformed

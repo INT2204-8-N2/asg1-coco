@@ -85,14 +85,14 @@ public class ExportFile extends javax.swing.JFrame {
             file.createNewFile();
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             try {
-            result = connect.excuteQuery("SELECT * FROM tbl_edict");
+            result = connect.excuteQuery("SELECT * FROM Dictionary");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Lỗi1:" + ex.toString());
         }
         
             try {
                 while (result.next()) {
-                    bw.write(result.getString("word")+"~~~"+result.getString("detail")+"\n");
+                    bw.write(result.getString("word")+"~~~"+result.getString("info")+"\n");
                 }       
             } catch (SQLException ex) {
                 Logger.getLogger(ExportFile.class.getName()).log(Level.SEVERE, null, ex);

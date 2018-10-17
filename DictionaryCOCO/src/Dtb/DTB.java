@@ -20,7 +20,7 @@ public class DTB {
     public Connection connect() {
       try {     
                 Class.forName("org.sqlite.JDBC");
-                String url = "jdbc:sqlite:dictionaries.db";
+                String url = "jdbc:sqlite:dictionaryvv.db";
                 conn = DriverManager.getConnection(url);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -28,12 +28,12 @@ public class DTB {
         return conn;
     }
      public  void  setId(){
-        String sql="SELECT MAX(idx) FROM tbl_edict";
+        String sql="SELECT MAX(id) FROM Dictionary";
         int idmax=0;
         ResultSet rs=null;
         try (Connection conn = this.connect()){    
              rs  = this.excuteQuery(sql);
-            idmax=rs.getInt("MAX(idx)");
+            idmax=rs.getInt("MAX(id)");
             conn.close();
             rs.close();
         } catch (Exception e) {
@@ -43,7 +43,7 @@ public class DTB {
         this.id=idmax+1;
     }
      public void insert(String eng, String viet){
-       String sql = "INSERT INTO tbl_edict(idx,word,detail) VALUES("+(id++) +",'"+eng+"','"+viet+"')";
+       String sql = "INSERT INTO Dictionary(id,word,info) VALUES("+(id++) +",'"+eng+"','"+viet+"')";
 
         try (Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -59,9 +59,9 @@ public class DTB {
         }
     }
      public void update(int id, String word, String detail) {
-        String sql = "UPDATE tbl_edict SET word = ? , "
-                + "detail = ? "
-                + "WHERE idx = ?";
+        String sql = "UPDATE Dictionary SET word = ? , "
+                + "info = ? "
+                + "WHERE id = ?";
  
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -74,7 +74,7 @@ public class DTB {
         }
     }
        public void delete(String word) {
-        String sql = "DELETE FROM tbl_edict WHERE word = ?";
+        String sql = "DELETE FROM Dictionary WHERE word = ?";
  
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -86,15 +86,17 @@ public class DTB {
         }
     }
     public Word getword(String word) {
-        String sql = "SELECT * "+ "FROM tbl_edict WHERE word = \""+word+"\"";
+        String sql = "SELECT * "+ "FROM Dictionary WHERE word = \""+word+"\"";
         ResultSet rs=null;
         Word ev=new Word();
+        
+        ev.setExplain("Không tìm thấy");
         try (Connection conn = this.connect()){
              rs  = this.excuteQuery(sql);
              while(rs.next()){
-                 ev.setId(rs.getInt("idx"));
+                 ev.setId(rs.getInt("id"));
                  ev.setSpelling(rs.getString("word"));
-                 ev.setExplain(rs.getString("detail"));
+                 ev.setExplain(rs.getString("info"));
              }
   
             
@@ -134,7 +136,7 @@ public class DTB {
         return res;
     }
     public Word getData(int idd){
-       String sql = "SELECT * "+ "FROM tbl_edict WHERE idx = '"+ idd+ "'";
+       String sql = "SELECT * "+ "FROM Dictionary WHERE id = '"+ idd+ "'";
         ResultSet rs=null;
         Word ev=new Word();
         try (Connection conn = this.connect()){
@@ -147,7 +149,7 @@ public class DTB {
             
              while(rs.next()){
                  ev.setSpelling(rs.getString("word"));
-                 ev.setExplain(rs.getString("detail"));
+                 ev.setExplain(rs.getString("info"));
              }
   
             
