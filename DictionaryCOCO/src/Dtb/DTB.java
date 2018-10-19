@@ -32,7 +32,8 @@ public class DTB {
         int idmax=0;
         ResultSet rs=null;
         try (Connection conn = this.connect()){    
-             rs  = this.excuteQuery(sql);
+             Statement stmt=conn.createStatement();
+            rs  = stmt.executeQuery(sql);
             idmax=rs.getInt("MAX(id)");
             conn.close();
             rs.close();
@@ -86,17 +87,18 @@ public class DTB {
         }
     }
     public Word getword(String word) {
-        String sql = "SELECT * "+ "FROM Dictionary WHERE word = \""+word+"\"";
+        String sql = "SELECT id,word,info "+ "FROM Dictionary WHERE word = \""+word+"\"";
         ResultSet rs=null;
         Word ev=new Word();
         
         ev.setExplain("Không tìm thấy");
         try (Connection conn = this.connect()){
-             rs  = this.excuteQuery(sql);
+             Statement stmt=conn.createStatement();
+             rs  = stmt.executeQuery(sql);
              while(rs.next()){
-                 ev.setId(rs.getInt("id"));
-                 ev.setSpelling(rs.getString("word"));
-                 ev.setExplain(rs.getString("info"));
+                 ev.setId(rs.getInt(1));
+                 ev.setSpelling(rs.getString(2));
+                 ev.setExplain(rs.getString(3));
              }
   
             
@@ -106,50 +108,18 @@ public class DTB {
         return ev;
         
     }   
-    
-      protected Statement getStatement() throws Exception {  //ham thuc thi cau lenh Query
-      // Neu staement =null hoac da dong thi can khoi tao lai
-      Statement statement = null;
-        if (statement == null ? true : statement.isClosed()) {
-            statement = this.connect().createStatement();
-        }
-        return statement;
-    }
-     public ResultSet excuteQuery(String query) throws Exception {
-         ResultSet result;
-        try {
-            //thực thi câu lệnh
-            result = this.getStatement().executeQuery(query);
-        } catch (Exception e) {
-            throw new Exception("Lỗi:" + e.getMessage());
-        }
-        return result; 
-    }
-    //Lay gia tri tra ve cua cac cau lenh: insert, update, delete, cerate
-    public int excuteUpdate(String query) throws Exception {
-        int res = Integer.MIN_VALUE;
-        try {
-            res = this.getStatement().executeUpdate(query);
-        } catch (Exception e) {
-            throw new Exception("Lỗi:" + e.getMessage());
-        } 
-        return res;
-    }
     public Word getData(int idd){
        String sql = "SELECT * "+ "FROM Dictionary WHERE id = '"+ idd+ "'";
         ResultSet rs=null;
         Word ev=new Word();
         try (Connection conn = this.connect()){
-//             PreparedStatement pstmt  = conn.prepareStatement(sql)){
-//            
-//            // set the value
-//            pstmt.setString(1,word);
-//            //
-             rs  = this.excuteQuery(sql);
+
+            Statement stmt=conn.createStatement();
+             rs  = stmt.executeQuery(sql);
             
              while(rs.next()){
-                 ev.setSpelling(rs.getString("word"));
-                 ev.setExplain(rs.getString("info"));
+                 ev.setSpelling(rs.getString(2));
+                 ev.setExplain(rs.getString(3));
              }
   
             
@@ -159,11 +129,4 @@ public class DTB {
         return ev;
     }
     
-    public static void main(String[] args) {
-//        DTB dtb = new DTB();
-//       dtb.setId();
-//        dtb.insert("okk1", "ổn");
-//         dtb.insert("okk2", "ổn");
-//        
-  }
 }

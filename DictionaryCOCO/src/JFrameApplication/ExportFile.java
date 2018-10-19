@@ -10,8 +10,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,9 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class ExportFile extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ExportFile
-     */
+    BufferedWriter bw;
     public ExportFile() {
         initComponents();
     }
@@ -76,36 +76,33 @@ public class ExportFile extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         DTB connect = new DTB();
-        ResultSet result=null;
         if(jTextField1.getText().isEmpty())
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập tên file","Lỗi",JOptionPane.ERROR_MESSAGE);
         else{
              File file = new File(jTextField1.getText()+".txt");
         try{
             file.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            try {
-            result = connect.excuteQuery("SELECT * FROM Dictionary");
+             bw = new BufferedWriter(new FileWriter(file));
+            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Lỗi1:" + ex.toString());
         }
-        
-            try {
+        try(Connection conn= connect.connect(); 
+            Statement stmt=conn.createStatement();
+            ResultSet result    = stmt.executeQuery("SELECT id,word,info FROM Dictionary")){
                 while (result.next()) {
-                    bw.write(result.getString("word")+"~~~"+result.getString("info")+"\n");
-                }       
-            } catch (SQLException ex) {
+                    bw.write(result.getString("word")+" "+result.getString("info")+"\n\n");
+                }   
+            JOptionPane.showMessageDialog(null, "Tạo file "+jTextField1.getText()+" thành công","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                bw.close();
+            } catch (Exception ex) {
                 Logger.getLogger(ExportFile.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(null, "Tạo file "+jTextField1.getText()+" thành công","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-            bw.close();
+        
             this.setVisible(false);
         }
-        catch (IOException e){
-             JOptionPane.showMessageDialog(null, "Không thể tạo file","Lỗi",JOptionPane.ERROR_MESSAGE);
-          
-        }
-        }
+       
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

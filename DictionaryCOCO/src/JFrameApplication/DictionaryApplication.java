@@ -12,8 +12,10 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +39,7 @@ public class DictionaryApplication extends javax.swing.JFrame {
    DefaultListModel mhis = new DefaultListModel();
    HashMap <String,Integer> his = new HashMap<String,Integer>();
    SynthesiserV2 synthesizer = new SynthesiserV2();
-  
+
     public DictionaryApplication() {
        initComponents();
        inithistory();
@@ -398,7 +400,7 @@ public class DictionaryApplication extends javax.swing.JFrame {
     }
     @SuppressWarnings("unchecked")
     private void tfEnterCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_tfEnterCaretUpdate
- 
+
     }//GEN-LAST:event_tfEnterCaretUpdate
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -527,7 +529,8 @@ public class DictionaryApplication extends javax.swing.JFrame {
             tfEnter.transferFocus();
            tcx.transferFocus();         
         }
-       search();
+       
+        search();
     }//GEN-LAST:event_tfEnterKeyReleased
     @SuppressWarnings("unchecked")
     private void timKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_timKeyReleased
@@ -561,20 +564,20 @@ public class DictionaryApplication extends javax.swing.JFrame {
     if(!tcx.isSelected())
         {
         dm.clear();
-        String  sql="select * from Dictionary where word like \"" + tfEnter.getText() + "%"+"\"";
-        ResultSet result=null;
+        String  sql="select word from Dictionary where word like '" + tfEnter.getText() + "%"+"'";
         word=new Word();
             if(tfEnter.getText().isEmpty()){
                 jLabel2.setText("");
                inithistory();
             }
            else{
-                try {
-                     result = connect.excuteQuery(sql);
+                try(Connection conn = connect.connect();
+                    Statement stmt=conn.createStatement();
+                    ResultSet result = stmt.executeQuery(sql)){
                     while (result.next()) {
-                        dm.addElement(result.getString("word"));
+                        dm.addElement(result.getString(1));
                     }
-                    result.close();
+                    
                 } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Có lỗi trong việc lấy dữ liệu, thành thật xin lỗi! ","Lỗi",JOptionPane.ERROR_MESSAGE);
             }
@@ -616,7 +619,6 @@ public class DictionaryApplication extends javax.swing.JFrame {
             }
         });
     }
-    @SuppressWarnings("unchecked")
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Exit;
     private javax.swing.JMenu File;
