@@ -39,7 +39,11 @@ public class DictionaryApplication extends javax.swing.JFrame {
    DefaultListModel mhis = new DefaultListModel();
    HashMap <String,Integer> his = new HashMap<String,Integer>();
    SynthesiserV2 synthesizer = new SynthesiserV2();
-
+    Thread thread = new Thread(){
+        public void run(){
+           search();
+        }
+       };
     public DictionaryApplication() {
        initComponents();
        inithistory();
@@ -529,8 +533,8 @@ public class DictionaryApplication extends javax.swing.JFrame {
             tfEnter.transferFocus();
            tcx.transferFocus();         
         }
-       
-        search();
+      
+       thread.run();
     }//GEN-LAST:event_tfEnterKeyReleased
     @SuppressWarnings("unchecked")
     private void timKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_timKeyReleased
@@ -572,7 +576,7 @@ public class DictionaryApplication extends javax.swing.JFrame {
             }
            else{
                 try(Connection conn = connect.connect();
-                    Statement stmt=conn.createStatement();
+                   Statement stmt=conn.createStatement();
                     ResultSet result = stmt.executeQuery(sql)){
                     while (result.next()) {
                         dm.addElement(result.getString(1));
