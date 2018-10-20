@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 /**
  *
  * @author Administrator
