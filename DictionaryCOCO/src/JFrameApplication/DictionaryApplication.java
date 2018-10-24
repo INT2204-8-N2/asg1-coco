@@ -39,11 +39,7 @@ public class DictionaryApplication extends javax.swing.JFrame {
    DefaultListModel mhis = new DefaultListModel();
    HashMap <String,Integer> his = new HashMap<String,Integer>();
    SynthesiserV2 synthesizer = new SynthesiserV2();
-    Thread thread = new Thread(){
-        public void run(){
-           search();
-        }
-       };
+
     public DictionaryApplication() {
        initComponents();
        inithistory();
@@ -534,41 +530,43 @@ public class DictionaryApplication extends javax.swing.JFrame {
            tcx.transferFocus();         
         }
       
-       thread.run();
+        else{
+            search();
+        }
     }//GEN-LAST:event_tfEnterKeyReleased
     @SuppressWarnings("unchecked")
     private void timKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_timKeyReleased
        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
        {
             word = new Word();
-        word=connect.getword(tfEnter.getText());
-        if(!tcx.isSelected())
-        {
-            tcx.setSelected(true);
-            his.put(word.getSpelling(), 1);
-            if(!word.getSpelling().isEmpty()){
-            jList1.setSelectedValue(word.getSpelling(),true);
+            word=connect.getword(tfEnter.getText());
+            if(!tcx.isSelected())
+            {
+                tcx.setSelected(true);
+                his.put(word.getSpelling(), 1);
+                if(!word.getSpelling().isEmpty()){
+                jList1.setSelectedValue(word.getSpelling(),true);
 
+                }
+                else
+                jLabel2.setText("Không tìm thấy từ");
+             }
+            else{
+            dm.clear();
+            dm.addElement(word.getSpelling());
+            jList1.setModel(dm);
+            jList1.setSelectedValue(word.getSpelling(),true);
+            his.put(word.getSpelling(), 1);
+            jLabel2.setText(word.getExplain());
             }
-            else
-            jLabel2.setText("Không tìm thấy từ");
-         }
-        else{
-        dm.clear();
-        dm.addElement(word.getSpelling());
-        jList1.setModel(dm);
-        jList1.setSelectedValue(word.getSpelling(),true);
-        his.put(word.getSpelling(), 1);
-        jLabel2.setText(word.getExplain());
-        }
-       }
+           }
     }//GEN-LAST:event_timKeyReleased
     @SuppressWarnings("unchecked")
     public void search(){
     if(!tcx.isSelected())
         {
         dm.clear();
-        String  sql="select word from Dictionary where word like '" + tfEnter.getText() + "%"+"'";
+        String  sql="select id,word from Dictionary where word like '" + tfEnter.getText() + "%'";
         word=new Word();
             if(tfEnter.getText().isEmpty()){
                 jLabel2.setText("");
@@ -576,11 +574,13 @@ public class DictionaryApplication extends javax.swing.JFrame {
             }
            else{
                 try(Connection conn = connect.connect();
-                   Statement stmt=conn.createStatement();
-                    ResultSet result = stmt.executeQuery(sql)){
-                    while (result.next()) {
-                        dm.addElement(result.getString(1));
+                  Statement stmt = conn.createStatement();
+                  ResultSet result = stmt.executeQuery(sql)){
+                  while(result.next()){
+                        dm.addElement(result.getString(2));
                     }
+                  result.close();
+                  stmt.close();
                     
                 } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Có lỗi trong việc lấy dữ liệu, thành thật xin lỗi! ","Lỗi",JOptionPane.ERROR_MESSAGE);
